@@ -19,8 +19,10 @@ use App\Models\BlogCategory;
 class BlogController extends Controller
 {
     public function getBlog() {
+        $blogfeatured = Blog::where('status',1)->where('featured',1)->limit(4)->get();
+        $category = BlogCategory::where('status',1)->get();
         $data = Blog::where('status',1)->orderBy('id', 'DESC')->paginate(10);
-        return view('front/blog', compact('data'));
+        return view('front/blog', compact('data','blogfeatured','category'));
     }
 
     public function getBlogCategory($id) {
@@ -31,13 +33,16 @@ class BlogController extends Controller
                 ->paginate(10);
     
         $catname = BlogCategory::where('slug',$id)->first();
-    
-        return view('front/blog-category', compact('blog','catname'));
+        $blogfeatured = Blog::where('status',1)->where('featured',1)->limit(4)->get();
+        $category = BlogCategory::where('status',1)->get();
+        return view('front/blog-category', compact('blog','catname','blogfeatured','category'));
     }
 
     public function getBlogDetails($id) {
         $blog = Blog::where('slug',$id)->first();
-        return view('front/blog-details', compact('blog'));
+        $blogfeatured = Blog::where('status',1)->where('featured',1)->limit(4)->get();
+        $category = BlogCategory::where('status',1)->get();
+        return view('front/blog-details', compact('blog','blogfeatured','category'));
     }
 
     public function findBlogSearch(Request $request){
@@ -51,7 +56,9 @@ class BlogController extends Controller
 
     public function blogSearch(Request $request){
         $q = $request->get('q');
+        $blogfeatured = Blog::where('status',1)->where('featured',1)->limit(4)->get();
+        $category = BlogCategory::where('status',1)->get();
         $blog = Blog::where ( 'title', 'LIKE', '%' . $q . '%' )->orWhere ( 'description', 'LIKE', '%' . $q . '%' )->paginate(10);
-        return view('front/blog-search', compact('blog','q'));
+        return view('front/blog-search', compact('blog','q','blogfeatured','category'));
     }
 }

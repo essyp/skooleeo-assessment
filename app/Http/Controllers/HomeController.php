@@ -18,12 +18,15 @@ use App\Models\Blog;
 use App\Models\User;
 use App\Models\Newsletter;
 use App\Models\ViewHistory;
+use App\Models\BlogCategory;
 
 class HomeController extends Controller
 {
     public function getHome() {
+        $blogfeatured = Blog::where('status',1)->where('featured',1)->limit(4)->get();
+        $category = BlogCategory::where('status',1)->get();
         $data = Blog::where('status',1)->orderBy('id', 'desc')->paginate(6);
-        return view('front/index', compact('data'));
+        return view('front/index', compact('data','blogfeatured','category'));
     }
 
     public function genPasswordResetLink(){

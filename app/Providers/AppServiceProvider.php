@@ -33,15 +33,6 @@ class AppServiceProvider extends ServiceProvider
     {
         Schema::defaultStringLength(191); 
 
-        $footerblog = Blog::where('status',1)->where('featured',1)->limit(2)->get();
-        view()->share('footerblog',$footerblog);
-
-        $blogfeatured = Blog::where('status',1)->where('featured',1)->limit(4)->get();
-        view()->share('blogfeatured',$blogfeatured);
-
-        $category = BlogCategory::where('status',1)->get();
-        view()->share('category',$category);
-
     }
 
     /**
