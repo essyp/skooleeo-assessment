@@ -1,6 +1,6 @@
 <div class="col-md-3 col-sm-12 col-12">
     <div class="blog-post-right">
-        <form action="/blog/search-blog" method="post">
+        <form action="{{url('blog/search-blog')}}" method="post">
             {{ csrf_field() }}
         <div id="search-input">
             <div class="input-group">
